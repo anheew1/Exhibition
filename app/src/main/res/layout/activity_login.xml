@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/colorLightGrey"
+tools:context=".MainActivity">
+
+<TextView
+    android:id="@+id/tv_login"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="80dp"
+    android:layout_weight="1"
+
+    android:text="Exhibition"
+    android:textAlignment="center"
+    android:textColor="@color/colorOrange"
+    android:textSize="80sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<EditText
+    android:id="@+id/editText2"
+    android:layout_width="319dp"
+    android:layout_height="40sp"
+    android:layout_marginStart="50dp"
+    android:layout_marginLeft="50dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginEnd="50dp"
+    android:layout_marginRight="50dp"
+    android:background="@drawable/rounded_edittext"
+    android:hint="ID:"
+    android:paddingLeft="5dp"
+    android:textColorHint="@color/colorEditTextHint"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_login" />
+
+<EditText
+    android:id="@+id/editText"
+    android:layout_width="319dp"
+    android:layout_height="40sp"
+    android:layout_marginStart="50dp"
+    android:layout_marginLeft="50dp"
+    android:layout_marginTop="112dp"
+    android:layout_marginEnd="50dp"
+    android:layout_marginRight="50dp"
+    android:background="@drawable/rounded_edittext"
+    android:hint="Password:"
+    android:paddingLeft="5dp"
+    android:textColorHint="@color/colorEditTextHint"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.485"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_login" />
+
+<Button
+    android:id="@+id/bt_submit_login"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="42dp"
+    android:text="Submit"
+    android:background="@color/colorOrange"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+<Button
+    android:id="@+id/bt_register"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="17dp"
+    android:text="Register"
+    android:background="@color/colorOrange"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/bt_submit_login" />
+
+
+</android.support.constraint.ConstraintLayout>
