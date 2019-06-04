@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_artwork"
+        icon="@drawable/ic_art_palette"
+        title="Artwork" />
+    <tab
+        id="@+id/tab_place"
+        icon="@drawable/ic_place"
+        title="Place" />
+    <tab
+        id="@+id/tab_upload"
+        icon="@drawable/ic_file_upload"
+        title="Upload" />
+    <tab
+        id = "@+id/tab_message"
+        icon = "@drawable/ic_message"
+        title = "Message"
+        />
+    <tab
+        id = "@+id/tab_mypage"
+        icon = "@drawable/ic_pageview"
+        title = "Mypage"
+        />
+</tabs>

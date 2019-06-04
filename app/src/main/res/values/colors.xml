@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorOrange">#dea044</color>
-    <color name="colorLightGrey">"#ececec"</color>
+    <color name="colorLightGrey">#ececec</color>
     <color name="colorEditTextHint">#b1b1b1</color>
 </resources>
