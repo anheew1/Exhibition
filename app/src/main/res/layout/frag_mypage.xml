@@ -87,12 +87,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_phone" />
 
             <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/root_transaction"
+                android:id="@+id/rootLayout_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/text_transaction"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_marginTop="16dp"
+                android:minHeight="20dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_transaction" />
 
 
 
