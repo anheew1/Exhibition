@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fm;
     private ArtworkFrag artworkFrag;
+    private PlaceFrag placeFrag;
     private FragmentTransaction tran;
 
     @Override
@@ -24,12 +25,10 @@ public class MainActivity extends AppCompatActivity {
         // Set Fragment
         fm = getSupportFragmentManager();
         artworkFrag = new ArtworkFrag();
+        placeFrag = new PlaceFrag();
         tran = fm.beginTransaction();
         //set default as artwork fragment
         tran.replace(R.id.main_layout,artworkFrag);
-
-
-
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -40,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
                     tran.commit();
                 }
                 if (tabId == R.id.tab_place) {
-
+                    tran.replace(R.id.main_layout,placeFrag);
+                    tran.commit();
                 }
                 if (tabId == R.id.tab_upload) {
 
