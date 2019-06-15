@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
+                tran = fm.beginTransaction();
+
                 if (tabId == R.id.tab_artwork) {
                     tran.replace(R.id.main_layout,artworkFrag);
-                    tran.commit();
                 }
                 if (tabId == R.id.tab_place) {
                     tran.replace(R.id.main_layout,placeFrag);
-                    tran.commit();
                 }
                 if (tabId == R.id.tab_upload) {
 
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 if (tabId == R.id.tab_mypage) {
 
                 }
+                tran.commit();
 
             }
         });
