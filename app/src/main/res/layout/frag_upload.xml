@@ -31,27 +31,65 @@
                 android:layout_height="100dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <TextView
+                <RadioButton
+                    android:id="@+id/radio_btn_artwork"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Artwork"
-                    android:textSize="30sp" />
-
+                    android:textSize="30sp"/>
                 <RadioButton
-                    android:id="@+id/radio_btn_artwork"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
+                    android:id = "@+id/radio_btn_place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="Place"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"/>
+            </RadioGroup>
 
+
+
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textSize="30sp"
+                android:text="Name"/>
+
+            <EditText
+                android:id="@+id/editText_upload_name"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@xml/edittext_box"
+                android:textSize="30sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:text="Artwork Type"/>
+
+            <RadioGroup
+                android:id="@+id/radio_upload_artType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
                 <RadioButton
-                    android:id = "@+id/radio_btn_place"
+                    android:id="@+id/radio_btn_painting"
+                    android:text="Painting"
+                    android:textSize="30sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id = "@+id/radio_btn_sculpture"
+                    android:text="Sculpture"
+                    android:textSize="30sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RadioGroup>
@@ -59,10 +97,86 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Take picture of it \n or insert photo"
-                android:textAlignment="center"
-                android:textSize="40sp" />
+                android:layout_marginTop="20dp"
+                android:textSize="30sp"
+                android:text="Artwork Size (cm)"
+                android:gravity="center"/>
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/size_x"
+                    android:layout_width="75dp"
+                    android:layout_height="60dp"
+                    android:textSize="20sp"
+                    android:maxEms="3"
+                    android:background="@xml/edittext_box"/>
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:text="X"
+                    android:textAlignment="center"
+                    android:textSize="40sp" />
+
+                <EditText
+                    android:id="@+id/size_y"
+                    android:layout_width="75dp"
+                    android:layout_height="60dp"
+                    android:background="@xml/edittext_box"
+                    android:maxEms="3"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/size_z_t"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:text="X"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    android:textSize="40sp" />
+
+                <EditText
+                    android:id="@+id/size_z"
+                    android:layout_width="75dp"
+                    android:layout_height="60dp"
+                    android:background="@xml/edittext_box"
+                    android:maxEms="3"
+                    android:visibility="gone"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Description"
+            android:textSize="30sp"/>
+
+            <EditText
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:lines="8"
+                android:minLines="6"
+                android:maxLines="10"
+                android:background="@xml/edittext_box"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Add photo"
+                android:textSize="30sp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,19 +184,12 @@
                 android:gravity="center">
 
                 <ImageButton
-                    android:id="@+id/btn_add_camera"
+                    android:id="@+id/btn_add_photo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_add_camera" />
 
-                <ImageButton
-                    android:id ="@+id/btn_insert_photo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="30dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_insert_photo" />
             </LinearLayout>
 
             <ImageView
@@ -92,56 +199,45 @@
                 android:layout_gravity="center"/>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Select Artwork Type"
-                android:textAlignment="center"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/btn_set_artworkType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:text="Choose type"
-                android:textSize="30sp"/>
-
-
-            <TextView
+                android:id="@+id/text_upload_peroid_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="Set Peroid and Prices"
                 android:textAlignment="center"
-                android:textSize="40sp" />
+                android:textSize="30sp" />
+
+            <CheckBox
+                android:id="@+id/check_notRental"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text="Not Rental"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
-                android:id = "@+id/upload_peroid_price"
+                android:layout_gravity="center"
+                android:id = "@+id/layout_upload_peroid_price"
                 android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_set_peroid"
+                <EditText
+                    android:id="@+id/editText_upload_setPeroid"
                     android:layout_width="150dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="20dp"
                     android:layout_gravity="center"
-                    android:text="Peroid"
+                    android:hint="Peroid"
+                    android:background="@xml/edittext_box"
                     android:textSize="30sp"/>
 
                 <EditText
                     android:id="@+id/editText_upload_price"
                     android:layout_width="162dp"
                     android:layout_height="80dp"
+                    android:hint="Price"
+                    android:background="@xml/edittext_box"
                     android:layout_marginLeft="20dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="30sp"
-                    android:text="\"/>
             </LinearLayout>
 
             <Button
@@ -149,10 +245,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:textSize="30sp"
+                android:layout_marginBottom="50dp"
+                android:textSize="50sp"
                 android:text = "Upload"
                 android:layout_gravity="center" />
-
         </LinearLayout>
     </ScrollView>
 

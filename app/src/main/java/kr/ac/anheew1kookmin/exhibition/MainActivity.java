@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fm;
     private ArtworkFrag artworkFrag;
     private PlaceFrag placeFrag;
+    private UploadFrag uploadFrag;
     private FragmentTransaction tran;
 
     @Override
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         artworkFrag = new ArtworkFrag();
         placeFrag = new PlaceFrag();
+        uploadFrag = new UploadFrag();
         tran = fm.beginTransaction();
         //set default as artwork fragment
         tran.replace(R.id.main_layout,artworkFrag);
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     tran.replace(R.id.main_layout,placeFrag);
                 }
                 if (tabId == R.id.tab_upload) {
-
+                    tran.replace(R.id.main_layout,uploadFrag);
                 }
                 if (tabId == R.id.tab_message) {
 
