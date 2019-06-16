@@ -27,10 +27,11 @@ public class UploadFrag extends Fragment {
     private RadioGroup radio_artType;
 
     private TextView text_setPeroidPrice;
-    private LinearLayout layout_setPeroidPrice;
+
 
     private ImageButton btn_addPhoto;
 
+    private LinearLayout layout_setPeroid;
     private CheckBox check_noRental;
     private EditText edit_setPeroid;
     private EditText edit_setPrice;
@@ -52,10 +53,12 @@ public class UploadFrag extends Fragment {
         btn_addPhoto = view.findViewById(R.id.btn_add_photo);
 
         text_setPeroidPrice = view.findViewById(R.id.text_upload_peroid_price);
-        layout_setPeroidPrice = view.findViewById(R.id.layout_upload_peroid_price);
+
 
         check_noRental = view.findViewById(R.id.check_notRental);
+        layout_setPeroid = view.findViewById(R.id.layout_upload_peroid);
         edit_setPeroid = view.findViewById(R.id.editText_upload_setPeroid);
+
         edit_setPrice = view.findViewById(R.id.editText_upload_price);
 
         btn_upload = view.findViewById(R.id.btn_upload);
@@ -64,12 +67,10 @@ public class UploadFrag extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_btn_place){
-                    text_setPeroidPrice.setVisibility(View.GONE);
-                    layout_setPeroidPrice.setVisibility(View.GONE);
+                    layout_setPeroid.setVisibility(View.GONE);
                 }
                 else if (checkedId == R.id.radio_btn_artwork){
-                    text_setPeroidPrice.setVisibility(View.VISIBLE);
-                    layout_setPeroidPrice.setVisibility(View.VISIBLE);
+                    layout_setPeroid.setVisibility(View.VISIBLE);
                 }
             }
         });

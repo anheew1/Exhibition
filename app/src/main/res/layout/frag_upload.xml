@@ -46,13 +46,10 @@
                     android:textSize="30sp"/>
             </RadioGroup>
 
-
-
-
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
                 android:layout_gravity="center"
                 android:textSize="30sp"
                 android:text="Name"/>
@@ -61,14 +58,14 @@
                 android:id="@+id/editText_upload_name"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_gravity="center"
                 android:background="@xml/edittext_box"
                 android:textSize="30sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="60dp"
                 android:textSize="30sp"
                 android:layout_gravity="center"
                 android:text="Artwork Type"/>
@@ -77,7 +74,7 @@
                 android:id="@+id/radio_upload_artType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:orientation="horizontal">
                 <RadioButton
@@ -97,7 +94,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="60dp"
                 android:textSize="30sp"
                 android:text="Artwork Size (cm)"
                 android:gravity="center"/>
@@ -108,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -155,7 +152,7 @@
             <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="Description"
             android:textSize="30sp"/>
@@ -165,6 +162,7 @@
                 android:layout_gravity="center"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:padding="5sp"
                 android:lines="8"
                 android:minLines="6"
                 android:maxLines="10"
@@ -173,7 +171,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="60dp"
                 android:gravity="center"
                 android:text="Add photo"
                 android:textSize="30sp"/>
@@ -202,7 +200,7 @@
                 android:id="@+id/text_upload_peroid_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="60dp"
                 android:text="Set Peroid and Prices"
                 android:textAlignment="center"
                 android:textSize="30sp" />
@@ -211,33 +209,51 @@
                 android:id="@+id/check_notRental"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
                 android:textSize="30sp"
                 android:text="Not Rental"/>
 
             <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:id = "@+id/layout_upload_peroid"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "Peroid"
+                android:textSize="30sp"/>
+            <EditText
+                android:id="@+id/editText_upload_setPeroid"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:background="@xml/edittext_box"
+                android:textSize="30sp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:id = "@+id/layout_upload_peroid_price"
+                android:gravity="center"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/editText_upload_setPeroid"
-                    android:layout_width="150dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center"
-                    android:hint="Peroid"
-                    android:background="@xml/edittext_box"
-                    android:textSize="30sp"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Price"
+                    android:textSize="30sp"/>
                 <EditText
                     android:id="@+id/editText_upload_price"
-                    android:layout_width="162dp"
-                    android:layout_height="80dp"
-                    android:hint="Price"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center"
                     android:background="@xml/edittext_box"
-                    android:layout_marginLeft="20dp" />
-
+                    android:textSize="30sp"/>
             </LinearLayout>
 
             <Button
