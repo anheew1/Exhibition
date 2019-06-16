@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ArtworkFrag artworkFrag;
     private PlaceFrag placeFrag;
     private UploadFrag uploadFrag;
+    private MypageFrag mypageFrag;
     private FragmentTransaction tran;
 
     @Override
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 if (tabId == R.id.tab_mypage) {
-
+                    tran.replace(R.id.main_layout,mypageFrag);
                 }
                 tran.commit();
 
