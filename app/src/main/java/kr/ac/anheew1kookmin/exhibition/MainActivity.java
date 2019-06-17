@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         artworkFrag = new ArtworkFrag();
         placeFrag = new PlaceFrag();
         uploadFrag = new UploadFrag();
+        mypageFrag = new MypageFrag();
         tran = fm.beginTransaction();
         //set default as artwork fragment
         tran.replace(R.id.main_layout,artworkFrag);
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                     tran.replace(R.id.main_layout,mypageFrag);
                 }
                 tran.commit();
-
             }
         });
     }
