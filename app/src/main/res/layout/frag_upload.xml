@@ -150,12 +150,13 @@
             </LinearLayout>
 
             <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:gravity="center"
-            android:text="Description"
-            android:textSize="30sp"/>
+                android:id ="@+id/editText_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:gravity="center"
+                android:text="Description"
+                android:textSize="30sp"/>
 
             <EditText
                 android:layout_marginTop="20dp"
@@ -241,6 +242,7 @@
                 android:textSize="30sp"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layout_upload_price"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
                 android:gravity="center"

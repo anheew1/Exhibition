@@ -3,10 +3,40 @@ package kr.ac.anheew1kookmin.exhibition.Entity;
 public class Place {
     private String id;
     private String name;
-    private String photoID;
+    private String photoId;
+    private String provider_id;
     private String artType;
     private String description;
     private String size;
+    public Place(){
+
+    }
+    public  Place(String id,String name,String photoId,String provider_id,
+                  String artType,String description, String size){
+        this.id=id;
+        this.name=name;
+        this.photoId=photoId;
+        this.provider_id=provider_id;
+        this.artType=artType;
+        this.description=description;
+        this.size=size;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
+    }
+
+    public String getProvider_id() {
+        return provider_id;
+    }
+
+    public void setProvider_id(String provider_id) {
+        this.provider_id = provider_id;
+    }
 
     public String getId() {
         return id;
@@ -25,11 +55,11 @@ public class Place {
     }
 
     public String getPhotoID() {
-        return photoID;
+        return photoId;
     }
 
     public void setPhotoID(String photoID) {
-        this.photoID = photoID;
+        this.photoId = photoID;
     }
 
     public String getArtType() {
@@ -55,6 +85,4 @@ public class Place {
     public void setSize(String size) {
         this.size = size;
     }
-
-
 }

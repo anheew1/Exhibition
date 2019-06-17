@@ -17,16 +17,22 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import kr.ac.anheew1kookmin.exhibition.Entity.Artwork;
+import kr.ac.anheew1kookmin.exhibition.Entity.Place;
 import kr.ac.anheew1kookmin.exhibition.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -36,9 +42,13 @@ public class UploadFrag extends Fragment {
     int REQUEST_IMAGE_LOAD = 2;
     private View view;
     private RadioGroup radio_selectType;
+    private RadioButton radio_artwork;
+    private RadioButton radio_place;
 
     private EditText edit_name;
     private RadioGroup radio_artType;
+    private RadioButton radio_painting;
+    private RadioButton radio_sculpture;
 
     private TextView text_setPeroidPrice;
 
@@ -48,7 +58,14 @@ public class UploadFrag extends Fragment {
     private ImageButton btn_addPhoto;
     private ImageButton btn_insertPhoto;
 
+    private EditText edit_description;
+
+    private EditText edit_sizeX;
+    private EditText edit_sizeY;
+    private EditText edit_sizeZ;
+
     private LinearLayout layout_setPeroid;
+    private LinearLayout layout_setPrice;
     private CheckBox check_noRental;
     private EditText edit_setPeroid;
     private EditText edit_setPrice;
@@ -61,21 +78,31 @@ public class UploadFrag extends Fragment {
         view = inflater.inflate(R.layout.frag_upload,container,false);
 
         radio_selectType = view.findViewById(R.id.radio_upload_selectType);
-        //radio_artwork = view.findViewById(R.id.radio_btn_artwork);
-        //radio_place = view.findViewById(R.id.radio_btn_place);
+        radio_artwork = view.findViewById(R.id.radio_btn_artwork);
+        radio_artwork.setChecked(true);
+        radio_place = view.findViewById(R.id.radio_btn_place);
 
         edit_name = view.findViewById(R.id.editText_upload_name);
 
         radio_artType = view.findViewById(R.id.radio_upload_artType);
+        radio_painting = view.findViewById(R.id.radio_btn_painting);
+        radio_painting.setChecked(true);
+        radio_sculpture = view.findViewById(R.id.radio_btn_sculpture);
 
         btn_addPhoto = view.findViewById(R.id.btn_add_photo);
         btn_insertPhoto = view.findViewById(R.id.btn_insert_photo);
+
+        edit_description =view.findViewById(R.id.editText_description);
+        edit_sizeX = view.findViewById(R.id.size_x);
+        edit_sizeY = view.findViewById(R.id.size_y);
+        edit_sizeZ = view.findViewById(R.id.size_z);
 
         text_setPeroidPrice = view.findViewById(R.id.text_upload_peroid_price);
 
 
         check_noRental = view.findViewById(R.id.check_notRental);
         layout_setPeroid = view.findViewById(R.id.layout_upload_peroid);
+
         edit_setPeroid = view.findViewById(R.id.editText_upload_setPeroid);
 
         edit_setPrice = view.findViewById(R.id.editText_upload_price);
@@ -86,10 +113,15 @@ public class UploadFrag extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_btn_place){
+                    check_noRental.setVisibility(View.GONE);
                     layout_setPeroid.setVisibility(View.GONE);
+                    layout_setPrice.setVisibility(View.GONE);
+
                 }
                 else if (checkedId == R.id.radio_btn_artwork){
+                    check_noRental.setVisibility(View.VISIBLE);
                     layout_setPeroid.setVisibility(View.VISIBLE);
+                    layout_setPrice.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -168,6 +200,58 @@ public class UploadFrag extends Fragment {
     }
 
     private void upload(){
-        //to-do
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        int type;
+        int TYPE_ARTWORK =0;
+        int TYPE_PLACE = 1;
+        if(radio_artwork.isChecked()){
+            type = TYPE_ARTWORK;
+        } else{
+            type = TYPE_PLACE;
+        }
+
+        String name = edit_name.getText().toString();
+        if(name.equals("")) {
+            Toast.makeText(getContext(),"Write name!",Toast.LENGTH_SHORT).show();
+        }
+
+        String artworkType;
+        if(radio_painting.isChecked()){
+            artworkType = "Painting";
+        } else{
+            artworkType = "Sculpture";
+        }
+
+        String description = edit_description.getText().toString();
+
+        // to-do 클라우드 연동
+
+        String size = edit_sizeX.getText().toString()+"X"+edit_sizeY.getText().toString();
+        if(artworkType.equals("Sculpture")){
+            size += "X"+edit_sizeZ.getText().toString();
+        }
+
+        int peroid =-1;
+        if(!check_noRental.isChecked()){
+            peroid = Integer.parseInt(edit_setPeroid.getText().toString());
+        }
+        int price = Integer.parseInt(edit_setPrice.getText().toString());
+
+        FirebaseUser curr_user = FirebaseAuth.getInstance().getCurrentUser();
+        String curr_id = curr_user.getUid();
+        if(type == TYPE_ARTWORK){
+            Artwork artwork = new Artwork("id",name,"photo_id",curr_id,description, artworkType,size,peroid,price);
+            String id = db.child("Artwork").push().getKey();
+            artwork.setId(id);
+            db.child("Artwork").child(id).setValue(artwork);
+        } else {
+            Place place = new Place("id",name,"photoId",curr_id,artworkType,description,size);
+            String id = db.child("Place").push().getKey();
+            place.setId(id);
+            db.child("Place").child(id).setValue(place);
+        }
+
+        Toast.makeText(getContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();
+
     }
 }
