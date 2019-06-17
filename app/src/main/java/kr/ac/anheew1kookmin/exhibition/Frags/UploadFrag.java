@@ -3,6 +3,7 @@ package kr.ac.anheew1kookmin.exhibition.Frags;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,7 +28,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -224,7 +229,6 @@ public class UploadFrag extends Fragment {
 
         String description = edit_description.getText().toString();
 
-        // to-do 클라우드 연동
 
         String size = edit_sizeX.getText().toString()+"X"+edit_sizeY.getText().toString();
         if(artworkType.equals("Sculpture")){
@@ -239,18 +243,35 @@ public class UploadFrag extends Fragment {
 
         FirebaseUser curr_user = FirebaseAuth.getInstance().getCurrentUser();
         String curr_id = curr_user.getUid();
+        String upload_id;
         if(type == TYPE_ARTWORK){
             Artwork artwork = new Artwork("id",name,"photo_id",curr_id,description, artworkType,size,peroid,price);
-            String id = db.child("Artwork").push().getKey();
-            artwork.setId(id);
-            db.child("Artwork").child(id).setValue(artwork);
+            upload_id = db.child("Artwork").push().getKey();
+            artwork.setId(upload_id);
+            db.child("Artwork").child(upload_id).setValue(artwork);
         } else {
             Place place = new Place("id",name,"photoId",curr_id,artworkType,description,size);
-            String id = db.child("Place").push().getKey();
-            place.setId(id);
-            db.child("Place").child(id).setValue(place);
+            upload_id = db.child("Place").push().getKey();
+            place.setId(upload_id);
+            db.child("Place").child(upload_id).setValue(place);
         }
 
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imgRef;
+        if (type == TYPE_ARTWORK){
+            imgRef = storageRef.child("Artwork").child(upload_id+".jpg");
+        } else {
+            imgRef = storageRef.child("Place").child(upload_id+".jpg");
+        }
+
+        img_photo.setDrawingCacheEnabled(true);
+        img_photo.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) img_photo.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imgRef.putBytes(data);
         Toast.makeText(getContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();
 
     }
