@@ -187,7 +187,12 @@
                     android:layout_height="100dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_add_camera" />
-
+                <ImageButton
+                    android:id="@+id/btn_insert_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_insert_photo" />
             </LinearLayout>
 
             <ImageView

@@ -30,12 +30,14 @@ public class UploadFrag extends Fragment {
 
 
     private ImageButton btn_addPhoto;
+    private ImageButton btn_insertPhoto;
 
     private LinearLayout layout_setPeroid;
     private CheckBox check_noRental;
     private EditText edit_setPeroid;
     private EditText edit_setPrice;
     private Button btn_upload;
+
 
     @Nullable
     @Override
@@ -51,6 +53,7 @@ public class UploadFrag extends Fragment {
         radio_artType = view.findViewById(R.id.radio_upload_artType);
 
         btn_addPhoto = view.findViewById(R.id.btn_add_photo);
+        btn_insertPhoto = view.findViewById(R.id.btn_insert_photo);
 
         text_setPeroidPrice = view.findViewById(R.id.text_upload_peroid_price);
 
@@ -93,6 +96,12 @@ public class UploadFrag extends Fragment {
                 addPhoto();
             }
         });
+        btn_insertPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertPhoto();
+            }
+        });
         check_noRental.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,11 +119,12 @@ public class UploadFrag extends Fragment {
             }
         });
 
-
-
         return view;
     }
     private void addPhoto(){
+        //to-do
+    }
+    private void insertPhoto(){
         //to-do
     }
     private void upload(){
