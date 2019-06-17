@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "314497622463",
+    "firebase_url": "https://exhibition-33ea0.firebaseio.com",
+    "project_id": "exhibition-33ea0",
+    "storage_bucket": "exhibition-33ea0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314497622463:android:7314ac39f2c93298",
+        "android_client_info": {
+          "package_name": "kr.ac.anheew1kookmin.exhibition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314497622463-et5sr6ig7fh54fm2rho1teeiv7gj7gp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL04B7F6QJevk4RI30GWFqWeuS9CwBxFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314497622463-et5sr6ig7fh54fm2rho1teeiv7gj7gp9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
