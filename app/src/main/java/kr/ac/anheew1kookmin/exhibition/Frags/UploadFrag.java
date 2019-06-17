@@ -1,6 +1,11 @@
 package kr.ac.anheew1kookmin.exhibition.Frags;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
@@ -17,9 +23,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import kr.ac.anheew1kookmin.exhibition.R;
 
+import static android.app.Activity.RESULT_OK;
+
 public class UploadFrag extends Fragment {
+    int REQUEST_IMAGE_CAPTURE = 1;
+    int REQUEST_IMAGE_LOAD = 2;
     private View view;
     private RadioGroup radio_selectType;
 
@@ -27,6 +41,8 @@ public class UploadFrag extends Fragment {
     private RadioGroup radio_artType;
 
     private TextView text_setPeroidPrice;
+
+    private ImageView img_photo;
 
 
     private ImageButton btn_addPhoto;
@@ -122,11 +138,35 @@ public class UploadFrag extends Fragment {
         return view;
     }
     private void addPhoto(){
-        //to-do
+        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(photoIntent.resolveActivity(getActivity().getPackageManager()) != null){
+            startActivityForResult(photoIntent,REQUEST_IMAGE_CAPTURE);
+        }
     }
     private void insertPhoto(){
-        //to-do
+        Intent photoIntent =new Intent(Intent.ACTION_PICK);
+        photoIntent.setType("image/*");
+        startActivityForResult(photoIntent, REQUEST_IMAGE_LOAD);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE || requestCode == REQUEST_IMAGE_LOAD){
+            if(resultCode == RESULT_OK) {
+                try {
+                    Uri imgUri = data.getData();
+                    InputStream imageStream = getActivity().getContentResolver().openInputStream(imgUri);
+                    Bitmap imageBitmap = BitmapFactory.decodeStream(imageStream);
+                    img_photo = (ImageView) view.findViewById(R.id.imageView_photo);
+                    img_photo.setImageBitmap(imageBitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private void upload(){
         //to-do
     }
