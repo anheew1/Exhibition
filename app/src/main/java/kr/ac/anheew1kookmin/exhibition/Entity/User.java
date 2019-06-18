@@ -13,6 +13,9 @@ public class User {
 
     public User(){
     }
+    public  User(String uid,String email,String name){
+
+    }
 
     public String getEmail() {
         return email;

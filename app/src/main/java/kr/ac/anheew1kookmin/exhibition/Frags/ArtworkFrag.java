@@ -3,6 +3,7 @@ package kr.ac.anheew1kookmin.exhibition.Frags;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import kr.ac.anheew1kookmin.exhibition.Entity.Artwork;
 import kr.ac.anheew1kookmin.exhibition.R;
 import kr.ac.anheew1kookmin.exhibition.Adapter.GridImageAdapter;
 
@@ -29,6 +31,9 @@ public class ArtworkFrag extends Fragment {
                 Toast.makeText(view.getContext(),""+position,Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
         return view;
     }
 }

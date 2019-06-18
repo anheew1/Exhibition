@@ -1,14 +1,19 @@
 package kr.ac.anheew1kookmin.exhibition.Frags;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +109,6 @@ public class UploadFrag extends Fragment {
 
         text_setPeroidPrice = view.findViewById(R.id.text_upload_peroid_price);
 
-
         check_noRental = view.findViewById(R.id.check_notRental);
         layout_setPeroid = view.findViewById(R.id.layout_upload_peroid);
 
@@ -134,12 +138,12 @@ public class UploadFrag extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.radio_btn_painting){
-                    view.findViewById(R.id.size_z_t).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.size_z).setVisibility(View.VISIBLE);
-                }
-                else if (checkedId == R.id.radio_btn_sculpture){
                     view.findViewById(R.id.size_z_t).setVisibility(View.GONE);
                     view.findViewById(R.id.size_z).setVisibility(View.GONE);
+                }
+                else if (checkedId == R.id.radio_btn_sculpture){
+                    view.findViewById(R.id.size_z_t).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.size_z).setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -174,10 +178,34 @@ public class UploadFrag extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+
+            } else {
+                // denied
+            }
+        }
+    }
+
     private void addPhoto(){
-        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent photoIntent = new Intent();
+        photoIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         if(photoIntent.resolveActivity(getActivity().getPackageManager()) != null){
-            startActivityForResult(photoIntent,REQUEST_IMAGE_CAPTURE);
+            if ( Build.VERSION.SDK_INT >= 23 && getActivity().checkSelfPermission(Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA},
+                        REQUEST_IMAGE_CAPTURE);
+            }
+            else {
+                startActivityForResult(photoIntent,REQUEST_IMAGE_CAPTURE);
+            }
         }
     }
     private void insertPhoto(){
@@ -189,17 +217,12 @@ public class UploadFrag extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE || requestCode == REQUEST_IMAGE_LOAD){
+        if (requestCode== REQUEST_IMAGE_CAPTURE || requestCode == REQUEST_IMAGE_LOAD){
             if(resultCode == RESULT_OK) {
-                try {
-                    Uri imgUri = data.getData();
-                    InputStream imageStream = getActivity().getContentResolver().openInputStream(imgUri);
-                    Bitmap imageBitmap = BitmapFactory.decodeStream(imageStream);
+                    Bundle bundle = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap)bundle.get("data");
                     img_photo = (ImageView) view.findViewById(R.id.imageView_photo);
                     img_photo.setImageBitmap(imageBitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
             }
         }
     }
@@ -230,12 +253,22 @@ public class UploadFrag extends Fragment {
         String description = edit_description.getText().toString();
 
 
+
+        if(edit_sizeX.getText().toString().equals("") || edit_sizeY.getText().toString().equals("")
+                ||(artworkType.equals("Sculpture") && edit_sizeZ.getText().toString().equals("")) ) {
+            Toast.makeText(getContext(),"you must fill sizes",Toast.LENGTH_SHORT).show();
+            return;
+        }
         String size = edit_sizeX.getText().toString()+"X"+edit_sizeY.getText().toString();
         if(artworkType.equals("Sculpture")){
             size += "X"+edit_sizeZ.getText().toString();
         }
 
         int peroid =-1;
+        if(edit_setPeroid.getText().toString().equals("") || edit_setPrice.getText().toString().equals("")){
+            Toast.makeText(getContext(),"you must fill peroid and price",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(!check_noRental.isChecked()){
             peroid = Integer.parseInt(edit_setPeroid.getText().toString());
         }
@@ -245,14 +278,17 @@ public class UploadFrag extends Fragment {
         String curr_id = curr_user.getUid();
         String upload_id;
         if(type == TYPE_ARTWORK){
-            Artwork artwork = new Artwork("id",name,"photo_id",curr_id,description, artworkType,size,peroid,price);
+            Artwork artwork = new Artwork("id",name,"photo_id",curr_id,artworkType,description ,size,peroid,price);
             upload_id = db.child("Artwork").push().getKey();
+            Log.d("TAG",upload_id);
             artwork.setId(upload_id);
+            artwork.setPhotoID(upload_id);
             db.child("Artwork").child(upload_id).setValue(artwork);
         } else {
             Place place = new Place("id",name,"photoId",curr_id,artworkType,description,size);
             upload_id = db.child("Place").push().getKey();
             place.setId(upload_id);
+            place.setPhotoID(upload_id);
             db.child("Place").child(upload_id).setValue(place);
         }
 
@@ -265,14 +301,18 @@ public class UploadFrag extends Fragment {
             imgRef = storageRef.child("Place").child(upload_id+".jpg");
         }
 
+        if(img_photo == null ){
+            Toast.makeText(getContext(),"You must choose picture",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         img_photo.setDrawingCacheEnabled(true);
         img_photo.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) img_photo.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-
         UploadTask uploadTask = imgRef.putBytes(data);
         Toast.makeText(getContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();
-
     }
 }

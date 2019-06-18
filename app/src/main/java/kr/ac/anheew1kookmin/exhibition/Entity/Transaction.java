@@ -11,6 +11,20 @@ public class Transaction {
     private String place_id;
     private int price;
 
+    public Transaction(){
+
+    }
+    public  Transaction(String id,String buyer_id,String seller_id, Date purchase_date,
+                        String artwork_id,String place_id,int price){
+        this.id =id;
+        this.buyer_id = buyer_id;
+        this.seller_id = seller_id;
+        this.artwork_id = artwork_id;
+        this.place_id = place_id;
+        this.purchase_date = purchase_date;
+        this.price = price;
+    }
+
     public String getId() {
         return id;
     }
