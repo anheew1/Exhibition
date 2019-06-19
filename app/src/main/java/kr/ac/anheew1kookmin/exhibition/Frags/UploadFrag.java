@@ -268,19 +268,21 @@ public class UploadFrag extends Fragment {
         }
 
         int peroid =-1;
-        if(edit_setPrice.getText().toString().equals("")){
-            Toast.makeText(getContext(),"you must fill price",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else if(check_noRental.isChecked() && edit_setPrice.getText().toString().equals("")){
-            Toast.makeText(getContext(),"you must fill peroid",Toast.LENGTH_SHORT).show();
-            return;
-        }
+        int price = 0;
+        if( type == TYPE_ARTWORK) {
+            if (edit_setPrice.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "you must fill price", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (check_noRental.isChecked() && edit_setPrice.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "you must fill peroid", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        if( !check_noRental.isChecked()) {
-            peroid = Integer.parseInt(edit_setPeroid.getText().toString());
+            if (!check_noRental.isChecked()) {
+                peroid = Integer.parseInt(edit_setPeroid.getText().toString());
+            }
+            price = Integer.parseInt(edit_setPrice.getText().toString());
         }
-        int price = Integer.parseInt(edit_setPrice.getText().toString());
 
         FirebaseUser curr_user = FirebaseAuth.getInstance().getCurrentUser();
         String curr_id = curr_user.getUid();
