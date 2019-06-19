@@ -1,5 +1,6 @@
 package kr.ac.anheew1kookmin.exhibition.Frags;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import kr.ac.anheew1kookmin.exhibition.Entity.Artwork;
-import kr.ac.anheew1kookmin.exhibition.LoginActivity;
+import kr.ac.anheew1kookmin.exhibition.SubArtworkActivity;
 import kr.ac.anheew1kookmin.exhibition.R;
 import kr.ac.anheew1kookmin.exhibition.Adapter.GridImageAdapter;
 
@@ -81,7 +81,18 @@ public class RecArtworkFrag extends Fragment {
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(view.getContext(),""+position,Toast.LENGTH_SHORT).show();
+                        Intent subIntent = new Intent(getContext(), SubArtworkActivity.class);
+                        Artwork currArtwork = artworkArrayList.get(position);
+                        subIntent.putExtra("name",currArtwork.getName());
+                        subIntent.putExtra("price",currArtwork.getPrice());
+                        subIntent.putExtra("id",currArtwork.getId());
+                        subIntent.putExtra("photoID",currArtwork.getPhotoID());
+                        subIntent.putExtra("artist_id",currArtwork.getArtist_id());
+                        subIntent.putExtra("size",currArtwork.getSize());
+                        subIntent.putExtra("description",currArtwork.getName());
+                        subIntent.putExtra("peroid",currArtwork.getPeroid());
+                        subIntent.putExtra("image",(Bitmap)adapter.getItem(position));
+                        startActivity(subIntent);
                     }
                 });
             }

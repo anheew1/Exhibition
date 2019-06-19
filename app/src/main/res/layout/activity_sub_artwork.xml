@@ -18,14 +18,14 @@
             android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/purchase_artwork_img"
+            android:id="@+id/sub_artwork_img"
             android:layout_width="400dp"
             android:layout_height="400dp"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"/>
 
             <TextView
-                android:id="@+id/text_purchase_artwork_name"
+                android:id="@+id/text_sub_artwork_name"
                 android:textSize="30sp"
                 android:text = "NAME"
                 android:layout_gravity="center"
@@ -36,7 +36,7 @@
 
 
             <TextView
-                android:id="@+id/text_purchase_artwork_description"
+                android:id="@+id/text_sub_artwork_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -56,7 +56,7 @@
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/text_puchase_artworkType"
+                android:id="@+id/text_sub_artworkType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -64,7 +64,7 @@
                 android:gravity="center"
                 />
             <TextView
-                android:id="@+id/text_purchase_artwork_size"
+                android:id="@+id/text_sub_artwork_size"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_marginTop="20dp"/>
 
             <TextView
-                android:id="@+id/text_purchase_artwork_price"
+                android:id="@+id/text_sub_artwork_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
@@ -80,18 +80,13 @@
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/btn_purchase_artwork"
+                android:id="@+id/btn_sub_artwork"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="PURCHASE"
                 android:layout_marginTop="20dp"
                 android:textSize="40sp"/>
-
-
-
-
-
 
         </LinearLayout>
     </ScrollView>

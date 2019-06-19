@@ -54,14 +54,6 @@ public class Place {
         this.name = name;
     }
 
-    public String getPhotoID() {
-        return photoId;
-    }
-
-    public void setPhotoID(String photoID) {
-        this.photoId = photoID;
-    }
-
     public String getArtType() {
         return artType;
     }

@@ -1,5 +1,6 @@
 package kr.ac.anheew1kookmin.exhibition.Frags;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import kr.ac.anheew1kookmin.exhibition.Adapter.GridImageAdapter;
-import kr.ac.anheew1kookmin.exhibition.Entity.Artwork;
+import kr.ac.anheew1kookmin.exhibition.SubPlaceActivity;
 import kr.ac.anheew1kookmin.exhibition.Entity.Place;
 import kr.ac.anheew1kookmin.exhibition.R;
 
@@ -39,7 +39,7 @@ public class RecPlaceFrag extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_place, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_place);
         placeArrayList = new ArrayList<>();
@@ -51,7 +51,7 @@ public class RecPlaceFrag extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot child: dataSnapshot.getChildren()){
-                    Place place = (Place) child.getValue(Place.class);
+                    Place place = child.getValue(Place.class);
                     placeArrayList.add(place);
                 }
                 for( Place place: placeArrayList) {
@@ -74,7 +74,17 @@ public class RecPlaceFrag extends Fragment {
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(view.getContext(),""+position,Toast.LENGTH_SHORT).show();
+                        Intent subIntent = new Intent(getContext(), SubPlaceActivity.class);
+                        Place currPlace = placeArrayList.get(position);
+                        subIntent.putExtra("id",currPlace.getId());
+                        subIntent.putExtra("name",currPlace.getName());
+                        subIntent.putExtra("photoId",currPlace.getPhotoId());
+                        subIntent.putExtra("provider_id",currPlace.getProvider_id());
+                        subIntent.putExtra("artType",currPlace.getArtType());
+                        subIntent.putExtra("description",currPlace.getDescription());
+                        subIntent.putExtra("size",currPlace.getSize());
+                        subIntent.putExtra("image",(Bitmap) adapter.getItem(position));
+                        startActivity(subIntent);
                     }
                 });
             }

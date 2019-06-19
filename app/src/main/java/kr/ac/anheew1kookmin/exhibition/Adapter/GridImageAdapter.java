@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
@@ -38,7 +39,7 @@ public class GridImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null ){
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridLayoutManager.LayoutParams(350,350));
+            imageView.setLayoutParams(new AbsListView.LayoutParams(350,350));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
         }

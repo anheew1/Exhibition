@@ -127,7 +127,6 @@ public class UploadFrag extends Fragment {
                     check_noRental.setVisibility(View.GONE);
                     layout_setPeroid.setVisibility(View.GONE);
                     layout_setPrice.setVisibility(View.GONE);
-
                 }
                 else if (checkedId == R.id.radio_btn_artwork){
                     check_noRental.setVisibility(View.VISIBLE);
@@ -225,7 +224,6 @@ public class UploadFrag extends Fragment {
                     Bitmap imageBitmap = (Bitmap)bundle.get("data");
                     img_photo = (ImageView) view.findViewById(R.id.imageView_photo);
                     img_photo.setImageBitmap(imageBitmap);
-                    img_photo.setRotation(90);
             }
         }
     }
@@ -298,7 +296,7 @@ public class UploadFrag extends Fragment {
             Place place = new Place("id",name,"photoId",curr_id,artworkType,description,size);
             upload_id = db.child("Place").push().getKey();
             place.setId(upload_id);
-            place.setPhotoID(upload_id);
+            place.setPhotoId(upload_id);
             db.child("Place").child(upload_id).setValue(place);
         }
 
@@ -319,11 +317,8 @@ public class UploadFrag extends Fragment {
         img_photo.setDrawingCacheEnabled(true);
         img_photo.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) img_photo.getDrawable()).getBitmap();
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        Bitmap rotBitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        rotBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
         UploadTask uploadTask = imgRef.putBytes(data);
         Toast.makeText(getContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();

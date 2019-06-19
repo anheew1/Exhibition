@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <GridView
     android:id = "@+id/grid_place"
-    android:background="#afafaf"
-     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:horizontalSpacing="1dp"
+    android:columnWidth="10dp"
+    android:gravity="center"
+    android:numColumns="2"
+    android:verticalSpacing="10dp"
+    android:scrollbars="horizontal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
 
 

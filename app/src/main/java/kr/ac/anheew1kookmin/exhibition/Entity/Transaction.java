@@ -8,21 +8,19 @@ public class Transaction {
     private String seller_id;
     private Date purchase_date;
     private String artwork_id;
-    private String place_id;
-    private int price;
+    private String peroidical_price;
 
     public Transaction(){
 
     }
     public  Transaction(String id,String buyer_id,String seller_id, Date purchase_date,
-                        String artwork_id,String place_id,int price){
+                        String artwork_id,String peroidical_price){
         this.id =id;
         this.buyer_id = buyer_id;
         this.seller_id = seller_id;
         this.artwork_id = artwork_id;
-        this.place_id = place_id;
         this.purchase_date = purchase_date;
-        this.price = price;
+        this.peroidical_price = peroidical_price;
     }
 
     public String getId() {
@@ -65,19 +63,9 @@ public class Transaction {
         this.artwork_id = artwork_id;
     }
 
-    public String getPlace_id() {
-        return place_id;
+    public String getPeroidical_price() {
+        return peroidical_price;
     }
 
-    public void setPlace_id(String place_id) {
-        this.place_id = place_id;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public void setPeroidical_price(String peroidical_price) { this.peroidical_price = peroidical_price; }
 }
