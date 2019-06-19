@@ -62,6 +62,7 @@ public class RecPlaceFrag extends Fragment {
                         public void onSuccess(byte[] bytes) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                             adapter.addImageBitmap(bitmap);
+                            gridView.setAdapter(adapter);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -70,13 +71,6 @@ public class RecPlaceFrag extends Fragment {
                         }
                     });
                 }
-
-                while(true) {
-                    if (adapter.getCount() == bitmapArrayList.size())
-                        break;
-                }
-
-                gridView.setAdapter(adapter);
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -89,7 +83,6 @@ public class RecPlaceFrag extends Fragment {
                 Log.e("DBERROR",databaseError.getMessage());
             }
         });
-
         return view;
     }
 }
