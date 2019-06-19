@@ -8,12 +8,10 @@ public class Artwork {
     private String artType;
     private String description;
     private String size;
-    private boolean isRental;
     private int peroid;
     private int price;
 
     public Artwork(){
-
     }
 
     public Artwork(String id, String name, String photoID, String artist_id, String artType, String description, String size, int peroid, int price) {
@@ -26,14 +24,6 @@ public class Artwork {
         this.size = size;
         this.peroid = peroid;
         this.price = price;
-    }
-
-    public String getArtist_id() {
-        return artist_id;
-    }
-
-    public void setArtist_id(String artist_id) {
-        this.artist_id = artist_id;
     }
 
     public String getId() {
@@ -58,6 +48,14 @@ public class Artwork {
 
     public void setPhotoID(String photoID) {
         this.photoID = photoID;
+    }
+
+    public String getArtist_id() {
+        return artist_id;
+    }
+
+    public void setArtist_id(String artist_id) {
+        this.artist_id = artist_id;
     }
 
     public String getArtType() {
@@ -99,5 +97,4 @@ public class Artwork {
     public void setPrice(int price) {
         this.price = price;
     }
-
 }

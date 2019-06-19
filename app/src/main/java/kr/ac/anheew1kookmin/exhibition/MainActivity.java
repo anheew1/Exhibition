@@ -13,8 +13,8 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fm;
-    private ArtworkFrag artworkFrag;
-    private PlaceFrag placeFrag;
+    private RecArtworkFrag artworkFrag;
+    private RecPlaceFrag placeFrag;
     private UploadFrag uploadFrag;
     private MypageFrag mypageFrag;
     private FragmentTransaction tran;
@@ -26,15 +26,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Fragment
         fm = getSupportFragmentManager();
-        artworkFrag = new ArtworkFrag();
-        placeFrag = new PlaceFrag();
+        artworkFrag = new RecArtworkFrag();
+        placeFrag = new RecPlaceFrag();
         uploadFrag = new UploadFrag();
         mypageFrag = new MypageFrag();
         tran = fm.beginTransaction();
         //set default as artwork fragment
-        tran.replace(R.id.main_layout,artworkFrag);
+        tran.replace(R.id.main_layout,uploadFrag);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.selectTabWithId(R.id.tab_upload);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {

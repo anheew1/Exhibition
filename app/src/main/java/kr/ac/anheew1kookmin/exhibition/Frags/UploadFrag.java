@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -111,6 +112,7 @@ public class UploadFrag extends Fragment {
 
         check_noRental = view.findViewById(R.id.check_notRental);
         layout_setPeroid = view.findViewById(R.id.layout_upload_peroid);
+        layout_setPrice = view.findViewById(R.id.layout_upload_price);
 
         edit_setPeroid = view.findViewById(R.id.editText_upload_setPeroid);
 
@@ -163,9 +165,9 @@ public class UploadFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 if(check_noRental.isChecked()){
-                    edit_setPeroid.setVisibility(View.GONE);
+                    layout_setPeroid.setVisibility(View.GONE);
                 }else{
-                    edit_setPeroid.setVisibility(View.VISIBLE);
+                    layout_setPeroid.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -223,6 +225,7 @@ public class UploadFrag extends Fragment {
                     Bitmap imageBitmap = (Bitmap)bundle.get("data");
                     img_photo = (ImageView) view.findViewById(R.id.imageView_photo);
                     img_photo.setImageBitmap(imageBitmap);
+                    img_photo.setRotation(90);
             }
         }
     }
@@ -265,11 +268,16 @@ public class UploadFrag extends Fragment {
         }
 
         int peroid =-1;
-        if(edit_setPeroid.getText().toString().equals("") || edit_setPrice.getText().toString().equals("")){
-            Toast.makeText(getContext(),"you must fill peroid and price",Toast.LENGTH_SHORT).show();
+        if(edit_setPrice.getText().toString().equals("")){
+            Toast.makeText(getContext(),"you must fill price",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!check_noRental.isChecked()){
+        else if(check_noRental.isChecked() && edit_setPrice.getText().toString().equals("")){
+            Toast.makeText(getContext(),"you must fill peroid",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if( !check_noRental.isChecked()) {
             peroid = Integer.parseInt(edit_setPeroid.getText().toString());
         }
         int price = Integer.parseInt(edit_setPrice.getText().toString());
@@ -309,8 +317,11 @@ public class UploadFrag extends Fragment {
         img_photo.setDrawingCacheEnabled(true);
         img_photo.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) img_photo.getDrawable()).getBitmap();
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap rotBitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        rotBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
         UploadTask uploadTask = imgRef.putBytes(data);
         Toast.makeText(getContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();
