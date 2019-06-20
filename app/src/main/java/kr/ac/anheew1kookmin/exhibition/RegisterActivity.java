@@ -89,10 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
         String id = edit_id.getText().toString();
         String name = edit_name.getText().toString();
         // id is email
-        User user = new User("uid",id,name);
+        User user = new User(mAuth.getUid(),id,name);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        String uid = ref.child("/User").push().getKey();
-        user.setUid(uid);
-        ref.child("/User").child(uid).setValue(user);
+        ref.child("/User").child(mAuth.getUid()).setValue(user);
     }
 }

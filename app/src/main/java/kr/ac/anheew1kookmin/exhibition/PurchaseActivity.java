@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,12 +14,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import kr.ac.anheew1kookmin.exhibition.Entity.Transaction;
+import kr.ac.anheew1kookmin.exhibition.Entity.User;
 
 public class PurchaseActivity extends AppCompatActivity {
     private Button returnToMainButton;
@@ -37,10 +44,11 @@ public class PurchaseActivity extends AppCompatActivity {
         String id = "temp";
         Date purchaseDate = new Date();
 
-        Transaction transaction = new Transaction(id,buyerId,sellerId,purchaseDate,artworkId,peroidical_price);
+        final Transaction transaction = new Transaction(id,buyerId,sellerId,purchaseDate,artworkId,peroidical_price);
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         String transId =db.child("Transaction").push().getKey();
         transaction.setId(transId);
+
         db.child("Transaction").child(transId).setValue(transaction).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -40,11 +40,34 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="textAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="text" value="Image" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_insert_photo" />
+                                      <entry key="assetType" value="TEXT" />
+                                      <entry key="outputName" value="ic_image_sample" />
                                     </map>
                                   </option>
                                 </PersistentState>

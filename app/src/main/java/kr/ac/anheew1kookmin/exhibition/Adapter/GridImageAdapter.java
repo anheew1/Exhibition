@@ -55,6 +55,13 @@ public class GridImageAdapter extends BaseAdapter {
     public void addImageBitmap(Bitmap bitmap){
         bitmapArrayList.add(bitmap);
     }
+    public void insertImageBitmap(int position, Bitmap bitmap){
+        bitmapArrayList.add(position,bitmap);
+    }
+    public void initailizeSize( int size){
+        for(int i=0;i<size;i++)
+        bitmapArrayList.add(null);
+    }
     private String getImagesrc(){//todo
         return null;
     }

@@ -1,5 +1,6 @@
 package kr.ac.anheew1kookmin.exhibition;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fm;
     private RecArtworkFrag artworkFrag;
     private RecPlaceFrag placeFrag;
-    private UploadFrag uploadFrag;
+    private UploadActivity uploadActivity;
     private MypageFrag mypageFrag;
     private FragmentTransaction tran;
 
@@ -28,19 +29,17 @@ public class MainActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         artworkFrag = new RecArtworkFrag();
         placeFrag = new RecPlaceFrag();
-        uploadFrag = new UploadFrag();
         mypageFrag = new MypageFrag();
         tran = fm.beginTransaction();
         //set default as artwork fragment
-        tran.replace(R.id.main_layout,uploadFrag);
+        tran.replace(R.id.main_layout, artworkFrag);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        bottomBar.selectTabWithId(R.id.tab_upload);
+        bottomBar.selectTabWithId(R.id.tab_artwork);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 tran = fm.beginTransaction();
-
                 if (tabId == R.id.tab_artwork) {
                     tran.replace(R.id.main_layout,artworkFrag);
                 }
@@ -48,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
                     tran.replace(R.id.main_layout,placeFrag);
                 }
                 if (tabId == R.id.tab_upload) {
-                    tran.replace(R.id.main_layout,uploadFrag);
-                }
-                if (tabId == R.id.tab_message) {
-
+                    Intent upload = new Intent(MainActivity.this,UploadActivity.class);
+                    startActivity(upload);
                 }
                 if (tabId == R.id.tab_mypage) {
                     tran.replace(R.id.main_layout,mypageFrag);

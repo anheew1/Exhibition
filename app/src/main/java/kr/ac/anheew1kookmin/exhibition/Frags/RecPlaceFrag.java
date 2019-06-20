@@ -51,10 +51,8 @@ public class RecPlaceFrag extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot child: dataSnapshot.getChildren()){
-                    Place place = child.getValue(Place.class);
-                    placeArrayList.add(place);
-                }
-                for( Place place: placeArrayList) {
+                    final Place place = child.getValue(Place.class);
+                    Log.d("place name",place.getName());
                     StorageReference storage = FirebaseStorage.getInstance().getReference().child("Place/" + place.getId()+".jpg");
                     final long ONE_MEGABYTE = 1024 * 1024;
                     storage.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -63,6 +61,7 @@ public class RecPlaceFrag extends Fragment {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                             adapter.addImageBitmap(bitmap);
                             gridView.setAdapter(adapter);
+                            placeArrayList.add(place);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -71,6 +70,7 @@ public class RecPlaceFrag extends Fragment {
                         }
                     });
                 }
+
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -1,6 +1,8 @@
 package kr.ac.anheew1kookmin.exhibition.Entity;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Transaction {
     private String id;
@@ -68,4 +70,5 @@ public class Transaction {
     }
 
     public void setPeroidical_price(String peroidical_price) { this.peroidical_price = peroidical_price; }
+
 }

@@ -51,11 +51,7 @@ public class RecArtworkFrag extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot child: dataSnapshot.getChildren()){
-                    Artwork artwork = child.getValue(Artwork.class);
-                    artworkArrayList.add(artwork);
-                }
-                for( Artwork artwork: artworkArrayList) {
-                    Log.d("Artwork",artwork.getId());
+                    final Artwork artwork = child.getValue(Artwork.class);
                     StorageReference storage = FirebaseStorage.getInstance().getReference().child("Artwork/" + artwork.getId()+".jpg");
                     final long ONE_MEGABYTE = 1024 * 1024;
                     storage.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -64,7 +60,7 @@ public class RecArtworkFrag extends Fragment {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                             adapter.addImageBitmap(bitmap);
                             gridView.setAdapter(adapter);
-                            Log.d("OK","Add BItmap ");
+                            artworkArrayList.add(artwork);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -73,15 +69,14 @@ public class RecArtworkFrag extends Fragment {
                             Log.e("ST","Can't get image source");
                         }
                     });
+
                 }
-                // not adding bitmapArrayList
-                Log.d("Wait","now Wating");
-                Log.d("SET","Suceess setting adapter");
 
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent subIntent = new Intent(getContext(), SubArtworkActivity.class);
+                        Log.d("pos",position+" ");
                         Artwork currArtwork = artworkArrayList.get(position);
                         subIntent.putExtra("name",currArtwork.getName());
                         subIntent.putExtra("price",currArtwork.getPrice());

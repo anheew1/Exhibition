@@ -16,64 +16,66 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView_profile"
-                android:layout_width="147dp"
-                android:layout_height="147dp"
-                android:layout_marginStart="122dp"
-                android:layout_marginLeft="122dp"
-                android:layout_marginTop="57dp"
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="LOGOUT"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/editText_email"
+            <TextView
+                android:id="@+id/text_mypage_name"
                 android:layout_width="230dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="120dp"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="56dp"
+                android:layout_marginStart="112dp"
+                android:layout_marginLeft="112dp"
+                android:layout_marginTop="72dp"
                 android:ems="10"
-                android:hint="email"
-                android:inputType="textEmailAddress"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_profile" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
 
             <TextView
                 android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="72dp"
                 android:text="Name:"
-                app:layout_constraintEnd_toStartOf="@+id/editText_email"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_profile" />
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
 
             <TextView
-                android:id="@+id/text_phone"
+                android:id="@+id/text_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
-                android:text="Phone:"
-                app:layout_constraintEnd_toStartOf="@+id/editText_phone"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="68dp"
+                android:text="Email: "
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
-            <EditText
-                android:id="@+id/editText_phone"
-                android:layout_width="230dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="120dp"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="32dp"
+            <TextView
+                android:id="@+id/text_mypage_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="112dp"
+                android:layout_marginLeft="112dp"
+                android:layout_marginTop="50dp"
                 android:ems="10"
-                android:hint="011-1234-1234"
-                android:inputType="phone"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_email" />
+                app:layout_constraintTop_toBottomOf="@+id/text_mypage_name" />
 
             <TextView
                 android:id="@+id/text_transaction"
@@ -81,16 +83,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="44dp"
                 android:layout_marginLeft="44dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="100dp"
                 android:text="Transaction"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_phone" />
+                app:layout_constraintTop_toBottomOf="@+id/text_email" />
 
             <LinearLayout
                 android:id="@+id/rootLayout_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:paddingBottom="50dp"
                 android:minHeight="20dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"

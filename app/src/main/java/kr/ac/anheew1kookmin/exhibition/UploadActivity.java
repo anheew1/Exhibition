@@ -1,4 +1,4 @@
-package kr.ac.anheew1kookmin.exhibition.Frags;
+package kr.ac.anheew1kookmin.exhibition;
 
 import android.Manifest;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,17 +42,18 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import kr.ac.anheew1kookmin.exhibition.Entity.Artwork;
 import kr.ac.anheew1kookmin.exhibition.Entity.Place;
+import kr.ac.anheew1kookmin.exhibition.MainActivity;
 import kr.ac.anheew1kookmin.exhibition.R;
 
 import static android.app.Activity.RESULT_OK;
 
-public class UploadFrag extends Fragment {
-    int REQUEST_IMAGE_CAPTURE = 1;
-    int REQUEST_IMAGE_LOAD = 2;
-    private View view;
+public class UploadActivity extends AppCompatActivity {
+    public static int REQUEST_IMAGE_CAPTURE = 1;
+    public static int REQUEST_IMAGE_LOAD = 2;
     private RadioGroup radio_selectType;
     private RadioButton radio_artwork;
     private RadioButton radio_place;
@@ -71,6 +73,11 @@ public class UploadFrag extends Fragment {
 
     private EditText edit_description;
 
+    private TextView text_select_artwork_size;
+
+
+
+    private LinearLayout layout_size;
     private EditText edit_sizeX;
     private EditText edit_sizeY;
     private EditText edit_sizeZ;
@@ -82,56 +89,73 @@ public class UploadFrag extends Fragment {
     private EditText edit_setPrice;
     private Button btn_upload;
 
+    private boolean isPhoto;
 
-    @Nullable
+    private String name;
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_upload,container,false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.frag_upload);
 
-        radio_selectType = view.findViewById(R.id.radio_upload_selectType);
-        radio_artwork = view.findViewById(R.id.radio_btn_artwork);
+        radio_selectType = (RadioGroup)findViewById(R.id.radio_upload_selectType);
+        radio_artwork = (RadioButton)findViewById(R.id.radio_btn_artwork);
         radio_artwork.setChecked(true);
-        radio_place = view.findViewById(R.id.radio_btn_place);
+        radio_place = (RadioButton)findViewById(R.id.radio_btn_place);
 
-        edit_name = view.findViewById(R.id.editText_upload_name);
+        edit_name = (EditText)findViewById(R.id.editText_upload_name);
 
-        radio_artType = view.findViewById(R.id.radio_upload_artType);
-        radio_painting = view.findViewById(R.id.radio_btn_painting);
+        radio_artType = (RadioGroup)findViewById(R.id.radio_upload_artType);
+        radio_painting = (RadioButton)findViewById(R.id.radio_btn_painting);
         radio_painting.setChecked(true);
-        radio_sculpture = view.findViewById(R.id.radio_btn_sculpture);
+        radio_sculpture = (RadioButton)findViewById(R.id.radio_btn_sculpture);
 
-        btn_addPhoto = view.findViewById(R.id.btn_add_photo);
-        btn_insertPhoto = view.findViewById(R.id.btn_insert_photo);
+        btn_addPhoto = (ImageButton)findViewById(R.id.btn_add_photo);
+        btn_insertPhoto = (ImageButton)findViewById(R.id.btn_insert_photo);
 
-        edit_description =view.findViewById(R.id.editText_description);
-        edit_sizeX = view.findViewById(R.id.size_x);
-        edit_sizeY = view.findViewById(R.id.size_y);
-        edit_sizeZ = view.findViewById(R.id.size_z);
+        text_select_artwork_size = (TextView) findViewById(R.id.text_artwork_size_cm);
 
-        text_setPeroidPrice = view.findViewById(R.id.text_upload_peroid_price);
 
-        check_noRental = view.findViewById(R.id.check_notRental);
-        layout_setPeroid = view.findViewById(R.id.layout_upload_peroid);
-        layout_setPrice = view.findViewById(R.id.layout_upload_price);
+        edit_description =(EditText)findViewById(R.id.editText_description);
 
-        edit_setPeroid = view.findViewById(R.id.editText_upload_setPeroid);
+        layout_size =(LinearLayout) findViewById(R.id.layout_size);
+        edit_sizeX = (EditText)findViewById(R.id.size_x);
+        edit_sizeY = (EditText)findViewById(R.id.size_y);
+        edit_sizeZ = (EditText)findViewById(R.id.size_z);
 
-        edit_setPrice = view.findViewById(R.id.editText_upload_price);
+        text_setPeroidPrice = (TextView)findViewById(R.id.text_upload_peroid_price);
 
-        btn_upload = view.findViewById(R.id.btn_upload);
+        check_noRental = (CheckBox)findViewById(R.id.check_notRental);
+        layout_setPeroid =(LinearLayout) findViewById(R.id.layout_upload_peroid);
+        layout_setPrice = (LinearLayout)findViewById(R.id.layout_upload_price);
+
+        edit_setPeroid = (EditText)findViewById(R.id.editText_upload_setPeroid);
+
+        edit_setPrice = (EditText)findViewById(R.id.editText_upload_price);
+
+        btn_upload = (Button)findViewById(R.id.btn_upload);
+        img_photo = (ImageView)findViewById(R.id.imageView_photo);
 
         radio_selectType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_btn_place){
                     check_noRental.setVisibility(View.GONE);
+                    text_setPeroidPrice.setVisibility(View.GONE);
+                    layout_size.setVisibility(View.GONE);
                     layout_setPeroid.setVisibility(View.GONE);
                     layout_setPrice.setVisibility(View.GONE);
+                    text_select_artwork_size.setVisibility(View.GONE);
+
                 }
                 else if (checkedId == R.id.radio_btn_artwork){
                     check_noRental.setVisibility(View.VISIBLE);
+                    text_setPeroidPrice.setVisibility(View.VISIBLE);
+                    layout_size.setVisibility(View.VISIBLE);
                     layout_setPeroid.setVisibility(View.VISIBLE);
                     layout_setPrice.setVisibility(View.VISIBLE);
+                    text_select_artwork_size.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -139,12 +163,12 @@ public class UploadFrag extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.radio_btn_painting){
-                    view.findViewById(R.id.size_z_t).setVisibility(View.GONE);
-                    view.findViewById(R.id.size_z).setVisibility(View.GONE);
+                    findViewById(R.id.size_z_t).setVisibility(View.GONE);
+                    findViewById(R.id.size_z).setVisibility(View.GONE);
                 }
                 else if (checkedId == R.id.radio_btn_sculpture){
-                    view.findViewById(R.id.size_z_t).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.size_z).setVisibility(View.VISIBLE);
+                    findViewById(R.id.size_z_t).setVisibility(View.VISIBLE);
+                    findViewById(R.id.size_z).setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -177,8 +201,9 @@ public class UploadFrag extends Fragment {
             }
         });
 
-        return view;
+
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -196,22 +221,23 @@ public class UploadFrag extends Fragment {
     }
 
     private void addPhoto(){
-        Intent photoIntent = new Intent();
-        photoIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(photoIntent.resolveActivity(getActivity().getPackageManager()) != null){
-            if ( Build.VERSION.SDK_INT >= 23 && getActivity().checkSelfPermission(Manifest.permission.CAMERA)
+        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(photoIntent.resolveActivity(getPackageManager()) != null){
+            if ( Build.VERSION.SDK_INT >= 23 && checkSelfPermission(Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA},
                         REQUEST_IMAGE_CAPTURE);
             }
             else {
-                startActivityForResult(photoIntent,REQUEST_IMAGE_CAPTURE);
+                if (photoIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
+                }
             }
         }
     }
     private void insertPhoto(){
         Intent photoIntent =new Intent(Intent.ACTION_PICK);
-        photoIntent.setType("image/*");
+        photoIntent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(photoIntent, REQUEST_IMAGE_LOAD);
     }
 
@@ -222,8 +248,9 @@ public class UploadFrag extends Fragment {
             if(resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     Bitmap imageBitmap = (Bitmap)bundle.get("data");
-                    img_photo = (ImageView) view.findViewById(R.id.imageView_photo);
+                    img_photo = (ImageView) findViewById(R.id.imageView_photo);
                     img_photo.setImageBitmap(imageBitmap);
+                    img_photo.setRotation(270);
             }
         }
     }
@@ -241,7 +268,7 @@ public class UploadFrag extends Fragment {
 
         String name = edit_name.getText().toString();
         if(name.equals("")) {
-            Toast.makeText(getContext(),"Write name!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Write name!",Toast.LENGTH_SHORT).show();
         }
 
         String artworkType;
@@ -251,35 +278,35 @@ public class UploadFrag extends Fragment {
             artworkType = "Sculpture";
         }
 
-        String description = edit_description.getText().toString();
+        String description = edit_description.getText().toString().replace(" ","_");
 
 
-
-        if(edit_sizeX.getText().toString().equals("") || edit_sizeY.getText().toString().equals("")
-                ||(artworkType.equals("Sculpture") && edit_sizeZ.getText().toString().equals("")) ) {
-            Toast.makeText(getContext(),"you must fill sizes",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String size = edit_sizeX.getText().toString()+"X"+edit_sizeY.getText().toString();
-        if(artworkType.equals("Sculpture")){
-            size += "X"+edit_sizeZ.getText().toString();
-        }
-
+        String size="";
         int peroid =-1;
         int price = 0;
         if( type == TYPE_ARTWORK) {
             if (edit_setPrice.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "you must fill price", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "you must fill price", Toast.LENGTH_SHORT).show();
                 return;
             } else if (check_noRental.isChecked() && edit_setPrice.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "you must fill peroid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "you must fill peroid", Toast.LENGTH_SHORT).show();
                 return;
             }
+
 
             if (!check_noRental.isChecked()) {
                 peroid = Integer.parseInt(edit_setPeroid.getText().toString());
             }
             price = Integer.parseInt(edit_setPrice.getText().toString());
+            if(edit_sizeX.getText().toString().equals("") || edit_sizeY.getText().toString().equals("")
+                    ||(artworkType.equals("Sculpture") && edit_sizeZ.getText().toString().equals("")) ) {
+                Toast.makeText(getApplicationContext(),"you must fill sizes",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            size = edit_sizeX.getText().toString()+"X"+edit_sizeY.getText().toString();
+            if(artworkType.equals("Sculpture")){
+                size += "X"+edit_sizeZ.getText().toString();
+            }
         }
 
         FirebaseUser curr_user = FirebaseAuth.getInstance().getCurrentUser();
@@ -309,18 +336,23 @@ public class UploadFrag extends Fragment {
             imgRef = storageRef.child("Place").child(upload_id+".jpg");
         }
 
-        if(img_photo == null ){
-            Toast.makeText(getContext(),"You must choose picture",Toast.LENGTH_SHORT).show();
-            return;
-        }
+
 
         img_photo.setDrawingCacheEnabled(true);
         img_photo.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) img_photo.getDrawable()).getBitmap();
+        if(bitmap == null){
+            Toast.makeText(getApplicationContext(),"You must choose picture",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Matrix matrix = new Matrix();
+        matrix.postRotate(270);
+        Bitmap roBit = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        roBit.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
         UploadTask uploadTask = imgRef.putBytes(data);
-        Toast.makeText(getContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Upload_complete!",Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(UploadActivity.this,MainActivity.class));
     }
 }

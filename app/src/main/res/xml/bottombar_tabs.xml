@@ -13,11 +13,6 @@
         icon="@drawable/ic_file_upload"
         title="Upload" />
     <tab
-        id = "@+id/tab_message"
-        icon = "@drawable/ic_message"
-        title = "Message"
-        />
-    <tab
         id = "@+id/tab_mypage"
         icon = "@drawable/ic_pageview"
         title = "Mypage"
