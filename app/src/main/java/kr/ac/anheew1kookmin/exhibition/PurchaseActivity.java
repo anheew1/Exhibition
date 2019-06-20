@@ -25,11 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kr.ac.anheew1kookmin.exhibition.Entity.Transaction;
-import kr.ac.anheew1kookmin.exhibition.Entity.User;
 
 public class PurchaseActivity extends AppCompatActivity {
     private Button returnToMainButton;
     private TextView purchase_success;
+    private DatabaseReference db;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class PurchaseActivity extends AppCompatActivity {
         Date purchaseDate = new Date();
 
         final Transaction transaction = new Transaction(id,buyerId,sellerId,purchaseDate,artworkId,peroidical_price);
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance().getReference();
         String transId =db.child("Transaction").push().getKey();
         transaction.setId(transId);
 

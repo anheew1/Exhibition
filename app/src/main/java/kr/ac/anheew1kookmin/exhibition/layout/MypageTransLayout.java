@@ -23,21 +23,23 @@ import kr.ac.anheew1kookmin.exhibition.Entity.Artwork;
 import kr.ac.anheew1kookmin.exhibition.Entity.Transaction;
 import kr.ac.anheew1kookmin.exhibition.R;
 
-public class TransactionLayout extends LinearLayout {
+public class MypageTransLayout extends LinearLayout {
     private Transaction trans;
     private TextView text_trans_id;
     private TextView text_artwork_name;
     private TextView text_trans_date;
     private TextView text_peroidial_price;
     private ImageView imageView;
+    private DatabaseReference db;
+    private StorageReference storage;
 
-    public TransactionLayout(Context context) {
+    public MypageTransLayout(Context context) {
         super(context);
         LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.frag_mypage_trans,this,true);
     }
 
-    public TransactionLayout(Context context , Transaction trans) {
+    public MypageTransLayout(Context context , Transaction trans) {
         super(context);
         this.trans = trans;
         LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,7 +53,7 @@ public class TransactionLayout extends LinearLayout {
         text_trans_id.setText("ID:" +trans.getId());
         text_peroidial_price.setText(trans.getPeroidical_price());
         text_trans_date.setText(trans.getPurchase_date().toString());
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("Artwork").child(trans.getArtwork_id()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,7 +66,7 @@ public class TransactionLayout extends LinearLayout {
                 Log.e("dbError",databaseError.getMessage());
             }
         });
-        StorageReference storage = FirebaseStorage.getInstance().getReference().child("Artwork/" + trans.getArtwork_id()+".jpg");
+        storage = FirebaseStorage.getInstance().getReference().child("Artwork/" + trans.getArtwork_id()+".jpg");
         final long ONE_MEGABYTE = 1024 * 1024;
         storage.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

@@ -35,6 +35,8 @@ public class SubArtworkActivity extends AppCompatActivity {
     private TextView artwork_price;
     private Button btn_artwork_purchase;
 
+    private DatabaseReference db;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,7 @@ public class SubArtworkActivity extends AppCompatActivity {
         artwork_img.setImageBitmap((Bitmap)getIntent().getParcelableExtra("image"));
         artwork_name.setText(artwork.getName());
 
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("User").child(artwork.getArtist_id()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -78,8 +80,7 @@ public class SubArtworkActivity extends AppCompatActivity {
         artwork_size.setText(artwork.getSize());
         if(artwork.getPeroid() < 0)
             artwork_price.setText(artwork.getPrice()+ ""+Currency.getInstance(Locale.KOREA).getSymbol());
-        else artwork_price.setText(artwork.getPrice() +Currency.getInstance(Locale.KOREA).getSymbol()+
-                " For "+artwork.getPeroid()+" days");
+        else artwork_price.setText(genPeroidalPrice(artwork.getPrice(),artwork.getPeroid()));
         btn_artwork_purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,5 +99,9 @@ public class SubArtworkActivity extends AppCompatActivity {
                 b.getString("name"),b.getString("photoID"),b.getString("artist_id"),
                 b.getString("artType"),b.getString("description"),b.getString("size"),
                 b.getInt("peroid"),b.getInt("price"));
+    }
+    private String genPeroidalPrice(int price, int peroid){
+        return price+ Currency.getInstance(Locale.KOREA).getSymbol()+" For "+
+                peroid+" days";
     }
 }

@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fm;
     private RecArtworkFrag artworkFrag;
     private RecPlaceFrag placeFrag;
-    private UploadActivity uploadActivity;
     private MypageFrag mypageFrag;
     private FragmentTransaction tran;
 

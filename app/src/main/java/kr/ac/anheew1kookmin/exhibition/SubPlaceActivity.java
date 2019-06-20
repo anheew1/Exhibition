@@ -28,6 +28,8 @@ public class SubPlaceActivity extends AppCompatActivity {
     private TextView place_description;
     private TextView place_artworkType;
 
+    private DatabaseReference db;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class SubPlaceActivity extends AppCompatActivity {
         place_description.setText(currPlace.getDescription().replaceAll("_"," "));
         place_artworkType.setText("Need " +currPlace.getArtType());
 
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance().getReference();
         db.child("User").child(currPlace.getProvider_id()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -35,7 +35,7 @@ public class RecPlaceFrag extends Fragment {
     private View view;
     private GridView gridView;
     private ArrayList<Place>  placeArrayList;
-    private ArrayList<Bitmap> bitmapArrayList;
+    private  DatabaseReference db;
 
     @Nullable
     @Override
@@ -43,8 +43,7 @@ public class RecPlaceFrag extends Fragment {
         view = inflater.inflate(R.layout.frag_place, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_place);
         placeArrayList = new ArrayList<>();
-        bitmapArrayList = new ArrayList<>();
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance().getReference();
         final GridImageAdapter adapter = new GridImageAdapter(view.getContext());
 
         db.child("Place").addValueEventListener(new ValueEventListener() {

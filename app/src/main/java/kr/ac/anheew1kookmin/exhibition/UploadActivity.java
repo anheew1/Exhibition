@@ -75,8 +75,6 @@ public class UploadActivity extends AppCompatActivity {
 
     private TextView text_select_artwork_size;
 
-
-
     private LinearLayout layout_size;
     private EditText edit_sizeX;
     private EditText edit_sizeY;
@@ -89,15 +87,18 @@ public class UploadActivity extends AppCompatActivity {
     private EditText edit_setPrice;
     private Button btn_upload;
 
-    private boolean isPhoto;
-
-    private String name;
+    private StorageReference storageRef;
+    private DatabaseReference db;
+    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frag_upload);
+
+        db= FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         radio_selectType = (RadioGroup)findViewById(R.id.radio_upload_selectType);
         radio_artwork = (RadioButton)findViewById(R.id.radio_btn_artwork);
@@ -256,7 +257,6 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void upload(){
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         int type;
         int TYPE_ARTWORK =0;
         int TYPE_PLACE = 1;
@@ -309,7 +309,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         }
 
-        FirebaseUser curr_user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser curr_user = mAuth.getCurrentUser();
         String curr_id = curr_user.getUid();
         String upload_id;
         if(type == TYPE_ARTWORK){
@@ -327,8 +327,7 @@ public class UploadActivity extends AppCompatActivity {
             db.child("Place").child(upload_id).setValue(place);
         }
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
+        storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference imgRef;
         if (type == TYPE_ARTWORK){
             imgRef = storageRef.child("Artwork").child(upload_id+".jpg");
